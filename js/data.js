@@ -1,4 +1,4 @@
-import { getRandomInteger, getRandomArrayElement } from './util.js';
+import { getRandomInteger, getRandomArrayElement, createIdGenerator } from './util.js';
 
 const SIMILAR_IMAGE_COUNT = 25;
 const LikesCount = {
@@ -47,8 +47,10 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+const generateCommentId = createIdGenerator();
+
 const generateComment = () => ({
-  id: getRandomInteger(0, 1000),
+  id: generateCommentId,
   avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES),
