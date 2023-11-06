@@ -1,15 +1,23 @@
+import { openModal } from './render-big-picture';
+
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content
   .querySelector('.picture');
 const container = document.querySelector('.pictures');
 
-const createThumbnail = ({ url, description, comments, likes }) => {
+const createThumbnail = (picture) => {
+  const { url, description, comments, likes } = picture;
   const thumbnail = thumbnailTemplate.cloneNode(true);
   thumbnail.querySelector('.picture__img').src = url;
   thumbnail.querySelector('.picture__img').alt = description;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
   thumbnail.querySelector('.picture__likes').textContent = likes;
+  // Обработчик событий на модальное окно
+  thumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openModal(picture);
+  });
   return thumbnail;
 };
 
