@@ -1,3 +1,5 @@
+import { resetScale } from './scale.js';
+import { init as initEffect, reset as resetEffect } from './effect.js';
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
@@ -25,12 +27,14 @@ const pristine = new window.Pristine(form, {
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown); // Обработчик закрытия мод.окна по нажатию клавиши
+  document.addEventListener('keydown', onDocumentKeydown); // Обработчик закрытия модал.окна по нажатию клавиши
 };
 
 // Закрывает модальное окно
 const hideModal = () => {
   form.reset(); // Сбрасываем значения формы
+  resetScale();
+  resetEffect();
   pristine.reset(); // Очищаем инпуты от слушателей, чтобы не копились сообщения
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -60,7 +64,7 @@ const hasUniqueTags = (value) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-// Закрываем мод.окно при нажатии клавиши Esc
+// Закрываем модал.окно при нажатии клавиши Esc
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape' && !isTextFieldFocused()) {
     evt.preventDefault();
@@ -104,8 +108,6 @@ pristine.addValidator(
 );
 
 fileField.addEventListener('change', onFileInputChange);
-
-// Закрытие по нажатию на крестик
 cancelButton.addEventListener('click', onCancelButtonClick);
 form.addEventListener('submit', onFormSubmit);
-
+initEffect();
