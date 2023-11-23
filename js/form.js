@@ -2,7 +2,7 @@ import { resetScale } from './scale.js';
 import { init as initEffect, reset as resetEffect } from './effect.js';
 import { sendPicture } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
-// import { preview } from 'vite';
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -27,8 +27,6 @@ const submitButton = form.querySelector('.img-upload__submit');
 const photoPreview = form.querySelector('.img-upload__preview img');
 const effectsPreviews = form.querySelectorAll('.effects__preview');
 
-const url = null;
-
 function toggleSubmitButton(isDisabled) {
   submitButton.disabled = isDisabled;
   submitButton.textContent = isDisabled
@@ -36,49 +34,42 @@ function toggleSubmitButton(isDisabled) {
     : SubmitButtonCaption.IDLE;
 }
 
-// Вешаем валидацию пристин на нашу форму
 const pristine = new window.Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
 });
 
-// Показ модального окна
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown); // Обработчик закрытия модал.окна по нажатию клавиши
 };
 
-// Закрывает модальное окно
 const hideModal = () => {
-  form.reset(); // Сбрасываем значения формы
+  form.reset();
   resetScale();
   resetEffect();
-  pristine.reset(); // Очищаем инпуты от слушателей, чтобы не копились сообщения
+  pristine.reset();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-// Чтобы не закрылось модальное окно при нажатии Esc, когда фокус в инпуте
+
 const isTextFieldFocused = () =>
-  document.activeElement === hashtagField || // Поле ввода хештега
-  document.activeElement === commentField; // Поле ввода комментария
+  document.activeElement === hashtagField ||
+  document.activeElement === commentField;
 
-// Правила для нормализации тега
 const normalizeTags = (tagString) => tagString
-  .trim() // Убирает пустое пространство по краям
-  .split(' ') // Добавляет пробел между тегами
-  .filter((tag) => Boolean(tag.length)); // Убирает лишние пробелы между тегами
+  .trim()
+  .split(' ')
+  .filter((tag) => Boolean(tag.length));
 
-// Проверяет валидацию тегов
 const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
 
-// Проверяет максимальное количество тегов
 const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTAG_COUNT;
 
-// Проверяет уникальность тегов
 const hasUniqueTags = (value) => {
   const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase()); // Приводит к нижнему регистру
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
@@ -93,7 +84,6 @@ const isValidType = (file) => {
   return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
 
-// Закрываем модал.окно при нажатии клавиши Esc
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape' && !isTextFieldFocused() && !isErrorMessageExists()) {
     evt.preventDefault();

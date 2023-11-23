@@ -1,5 +1,3 @@
-// import { openModal } from './render-big-picture';
-
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content.querySelector('.picture');

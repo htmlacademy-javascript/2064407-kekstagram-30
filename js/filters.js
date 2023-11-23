@@ -1,8 +1,7 @@
-// import { renderGallery } from './gallery';
 import { renderThumbnails } from './thumbnail';
 import { debounce } from './util';
 
-const filtersEl = document.querySelector('.img-filters');
+const filtersElement = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
 const defaultBtn = filterForm.querySelector('#filter-default');
 const randomBtn = filterForm.querySelector('#filter-random');
@@ -57,7 +56,7 @@ const repaint = (event, filter, data) => {
 const debouncedRepaint = debounce(repaint);
 
 const initFilter = (data) => {
-  filtersEl.classList.remove('img-filters--inactive');
+  filtersElement.classList.remove('img-filters--inactive');
   defaultBtn.addEventListener('click', (event) => {
     debouncedRepaint(event, FilterEnum.DEFAULT, data);
   });
