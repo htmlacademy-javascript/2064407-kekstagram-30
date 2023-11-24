@@ -27,12 +27,12 @@ const submitButton = form.querySelector('.img-upload__submit');
 const photoPreview = form.querySelector('.img-upload__preview img');
 const effectsPreviews = form.querySelectorAll('.effects__preview');
 
-function toggleSubmitButton(isDisabled) {
+const toggleSubmitButton = (isDisabled) => {
   submitButton.disabled = isDisabled;
   submitButton.textContent = isDisabled
     ? SubmitButtonCaption.SUBMITTING
     : SubmitButtonCaption.IDLE;
-}
+};
 
 const pristine = new window.Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -71,13 +71,11 @@ const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOL
 const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTAG_COUNT;
 
 const hasUniqueTags = (value) => {
-  const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase()); // Приводит к нижнему регистру
+  const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-function isErrorMessageExists() {
-  return Boolean(document.querySelector('.error'));
-}
+const isErrorMessageExists = () => Boolean(document.querySelector('.error'));
 
 const isValidType = (file) => {
   const fileName = file.name.toLowerCase();
@@ -106,7 +104,7 @@ const onFileInputChange = () => {
   showModal();
 };
 
-async function sendForm(formElement) {
+const sendForm = async (formElement) => {
   if (!pristine.validate()) {
     return;
   }
@@ -120,7 +118,7 @@ async function sendForm(formElement) {
     showErrorMessage();
     toggleSubmitButton(false);
   }
-}
+};
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();

@@ -5,7 +5,7 @@ import { showErrorMessage } from './util.js';
 import { initFilter } from './filters.js';
 
 
-async function bootstrap() {
+const bootstrap = async () => {
   try {
     const pictures = await loadPictures();
     renderGallery(pictures);
@@ -13,5 +13,5 @@ async function bootstrap() {
   } catch (error) {
     showErrorMessage();
   }
-}
+};
 bootstrap();
