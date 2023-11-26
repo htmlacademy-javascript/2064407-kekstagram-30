@@ -54,7 +54,7 @@ const hidePicture = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onClosePictureButtonClik = () => {
+const onClosePictureButtonClick = () => {
   hidePicture();
 };
 
@@ -86,7 +86,7 @@ const showPicture = (pictureData) => {
   renderPicture(pictureData);
 };
 
-closePictureButton.addEventListener('click', onClosePictureButtonClik);
+closePictureButton.addEventListener('click', onClosePictureButtonClick);
 commentsLoader.addEventListener('click', onCommentsLoaderClock);
 
 export { showPicture };

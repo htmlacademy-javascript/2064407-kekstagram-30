@@ -43,7 +43,7 @@ const pristine = new window.Pristine(form, {
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown); // Обработчик закрытия модал.окна по нажатию клавиши
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const hideModal = () => {
