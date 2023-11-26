@@ -4,17 +4,16 @@ const errorMessageTemplate = document
   .content
   .querySelector('.data-error');
 
-function showErrorMessage() {
+const showErrorMessage = () => {
   const errorElement = errorMessageTemplate.cloneNode(true);
   document.body.append(errorElement);
   setTimeout(() => {
     errorElement.remove();
   }, REMOVE_MESSAGE_TIMEOUT);
-}
+};
 
 function debounce(callback, timeoutDelay = 500) {
   let timeoutId;
-
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);

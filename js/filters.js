@@ -14,9 +14,7 @@ const FilterEnum = {
   DISCUSSED: 'filter-discussed'
 };
 
-const getRandomIndex = function (min, max) {
-  return Math.floor(Math.random() * (max - min));
-};
+const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min));
 
 const filterHandlers = {
   [FilterEnum.DEFAULT]: (data) => data,
