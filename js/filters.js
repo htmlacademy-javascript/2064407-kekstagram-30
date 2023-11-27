@@ -5,7 +5,7 @@ const MAX_RANDOM_FILTER = 10;
 
 const filtersElement = document.querySelector('.img-filters');
 const filterFormElement = document.querySelector('.img-filters__form');
-const filterButtons = filterFormElement.querySelectorAll('button');
+const filterButtonElements = filterFormElement.querySelectorAll('button');
 const pictureContainerElement = document.querySelector('.pictures');
 
 const FilterEnum = {
@@ -48,7 +48,7 @@ const debouncedRepaint = debounce(repaint);
 
 const initFilter = (data) => {
   filtersElement.classList.remove('img-filters--inactive');
-  filterButtons.forEach((button) => {
+  filterButtonElements.forEach((button) => {
     button.addEventListener('click', (event) => {
       const currentActiveEl = filterFormElement.querySelector('.img-filters__button--active');
       currentActiveEl.classList.remove('img-filters__button--active');

@@ -22,7 +22,7 @@ const onCloseButtonClick = () => {
 };
 
 function onDocumentKeydown(evt) {
-  if (isEscape) {
+  if (isEscape(evt)) {
     evt.preventDefault();
     hideMessage();
   }
