@@ -1,12 +1,12 @@
 import { renderThumbnails } from './thumbnail';
 import { debounce } from './util';
 
-const filtersElement = document.querySelector('.img-filters');
-const filterForm = document.querySelector('.img-filters__form');
-const filterButtons = filterForm.querySelectorAll('button');
-const pictureContainerElement = document.querySelector('.pictures');
-
 const MAX_RANDOM_FILTER = 10;
+
+const filtersElement = document.querySelector('.img-filters');
+const filterFormElement = document.querySelector('.img-filters__form');
+const filterButtonElements = filterFormElement.querySelectorAll('button');
+const pictureContainerElement = document.querySelector('.pictures');
 
 const FilterEnum = {
   DEFAULT: 'filter-default',
@@ -19,15 +19,15 @@ const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min));
 const filterHandlers = {
   [FilterEnum.DEFAULT]: (data) => data,
   [FilterEnum.RANDOM]: (data) => {
-    const randomIndexList = [];
+    const elements = [];
     const max = Math.min(MAX_RANDOM_FILTER, data.length);
-    while (randomIndexList.length < max) {
+    while (elements.length < max) {
       const index = getRandomIndex(0, data.length);
-      if (!randomIndexList.includes(index)) {
-        randomIndexList.push(index);
+      if (!elements.includes(index)) {
+        elements.push(index);
       }
     }
-    return randomIndexList.map((index) => data[index]);
+    return elements.map((index) => data[index]);
   },
   [FilterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length)
 };
@@ -48,9 +48,9 @@ const debouncedRepaint = debounce(repaint);
 
 const initFilter = (data) => {
   filtersElement.classList.remove('img-filters--inactive');
-  filterButtons.forEach((button) => {
+  filterButtonElements.forEach((button) => {
     button.addEventListener('click', (event) => {
-      const currentActiveEl = filterForm.querySelector('.img-filters__button--active');
+      const currentActiveEl = filterFormElement.querySelector('.img-filters__button--active');
       currentActiveEl.classList.remove('img-filters__button--active');
       event.target.classList.add('img-filters__button--active');
       debouncedRepaint(event.target.id, data);
